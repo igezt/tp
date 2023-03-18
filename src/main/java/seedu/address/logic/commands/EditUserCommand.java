@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -81,7 +82,10 @@ public class EditUserCommand extends Command {
         assert user != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(user.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(user.getPhone());
+
+        Optional<Phone> newPhone = editPersonDescriptor.getPhone();
+        Optional<Phone> updatedPhone = newPhone.isEmpty() ? user.getPhone() : newPhone;
+
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(user.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(user.getAddress());
         Gender updatedGender = editPersonDescriptor.getGender().orElse(user.getGender());

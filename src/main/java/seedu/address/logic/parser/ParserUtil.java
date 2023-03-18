@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -95,15 +96,15 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code phone} is invalid.
      */
-    public static Phone parsePhone(String phone) throws ParseException {
-        if (phone == null) {
-            return null;
+    public static Optional<Phone> parsePhone(Optional<String> phone) throws ParseException {
+        if (phone.isEmpty()) {
+            return Optional.empty();
         }
-        String trimmedPhone = phone.trim();
+        String trimmedPhone = phone.get().trim();
         if (!Phone.isValidPhone(trimmedPhone)) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return Optional.of(new Phone(trimmedPhone));
     }
 
     /**

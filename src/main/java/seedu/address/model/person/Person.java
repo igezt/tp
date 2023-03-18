@@ -2,10 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import seedu.address.model.person.fields.Address;
 import seedu.address.model.person.fields.CommunicationChannel;
@@ -27,7 +24,7 @@ public class Person {
 
     // Identity fields
     private final Name name;
-    private final Phone phone;
+    private final Optional<Phone> phone;
     private final Email email;
     private final Gender gender;
     private final Major major;
@@ -44,7 +41,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Gender gender,
+    public Person(Name name, Optional<Phone> phone, Email email, Address address, Gender gender,
                   Major major, Modules modules, Race race, Set<Tag> tags, CommunicationChannel comms) {
         requireAllNonNull(name);
         this.name = name;
@@ -65,7 +62,7 @@ public class Person {
      * Returns a new Person who is Favourited.
      * Require all fields to be present and not null
      */
-    public Person(Name name, Phone phone, Email email, Address address, Gender gender,
+    public Person(Name name, Optional<Phone> phone, Email email, Address address, Gender gender,
                   Major major, Modules modules, Race race, Set<Tag> tags, CommunicationChannel comms,
                   Favorite favorite) {
         requireAllNonNull(name, favorite);
@@ -90,7 +87,7 @@ public class Person {
         requireAllNonNull(name);
         this.name = name;
         this.isFavorite = new Favorite(false);
-        this.phone = new Phone("");
+        this.phone = Optional.empty();
         this.email = new Email("");
         this.address = new Address("");
         this.tags.addAll(new HashSet<>());
@@ -115,7 +112,7 @@ public class Person {
         return name;
     }
 
-    public Phone getPhone() {
+    public Optional<Phone> getPhone() {
         return phone;
     }
 

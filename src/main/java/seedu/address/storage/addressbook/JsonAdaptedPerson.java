@@ -1,9 +1,6 @@
 package seedu.address.storage.addressbook;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -32,7 +29,7 @@ public class JsonAdaptedPerson {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     protected String name;
-    protected String phone;
+    protected Optional<String> phone;
     protected String email;
     protected String address;
     protected String race;
@@ -58,7 +55,7 @@ public class JsonAdaptedPerson {
                              @JsonProperty("tagged") List<JsonAdaptedTag> tagged,
                              @JsonProperty("favorite") String isFavorite) {
         this.name = name;
-        this.phone = phone;
+        this.phone = Objects.equals(phone, "") ? Optional.empty() : Optional.of(phone);
         this.email = email;
         this.address = address;
         this.race = race;
@@ -81,7 +78,7 @@ public class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Person source) {
         this.name = source.getName().fullName;
-        this.phone = source.getPhone().value;
+        this.phone = source.getPhone().isEmpty() ? Optional.empty() : Optional.of(source.getPhone().get().value);
         this.email = source.getEmail().value;
         this.address = source.getAddress().value;
         this.race = source.getRace().race;
@@ -117,10 +114,10 @@ public class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        if (!Phone.isValidPhone(phone)) {
+        if (phone.isPresent() && !Phone.isValidPhone(phone.get())) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(phone);
+        final Optional<Phone> modelPhone = phone.isEmpty() ? Optional.empty() : Optional.of(new Phone(phone.get()));
 
         if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);

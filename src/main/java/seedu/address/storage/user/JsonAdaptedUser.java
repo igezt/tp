@@ -3,6 +3,7 @@ package seedu.address.storage.user;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -88,10 +89,10 @@ public class JsonAdaptedUser extends JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        if (!Phone.isValidPhone(phone)) {
+        if (phone.isPresent() && !Phone.isValidPhone(phone.get())) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(phone);
+        final Optional<Phone> modelPhone = phone.isEmpty() ? Optional.empty() : Optional.of(new Phone(phone.get()));
 
         if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);

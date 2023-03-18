@@ -26,7 +26,7 @@ public class EditPersonDescriptor {
 
     private Optional<Index> index;
     private Name name;
-    private Phone phone;
+    private Optional<Phone> phone = Optional.empty();
     private Email email;
     private Address address;
     private Set<Tag> tags;
@@ -81,12 +81,12 @@ public class EditPersonDescriptor {
         return Optional.ofNullable(name);
     }
 
-    public void setPhone(Phone phone) {
+    public void setPhone(Optional<Phone> phone) {
         this.phone = phone;
     }
 
     public Optional<Phone> getPhone() {
-        return Optional.ofNullable(phone);
+        return phone;
     }
 
     public void setEmail(Email email) {

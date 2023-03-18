@@ -2,6 +2,7 @@ package seedu.address.model.user;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.event.Event;
@@ -31,7 +32,7 @@ public class User extends Person {
     /**
      * Every field must be present and not null. This constructor accepts a List of events.
      */
-    public User(Name name, Phone phone, Email email, Address address, Gender gender,
+    public User(Name name, Optional<Phone> phone, Email email, Address address, Gender gender,
                 Major major, Modules modules, Race race, Set<Tag> tags, CommunicationChannel comms,
                 Favorite favorite, List<Event> events) {
         super(name, phone, email, address, gender, major, modules, race, tags, comms);
@@ -42,7 +43,7 @@ public class User extends Person {
     /**
      * Every field must be present and not null. This constructor accepts a UniqueEventList of events.
      */
-    public User(Name name, Phone phone, Email email, Address address, Gender gender,
+    public User(Name name, Optional<Phone> phone, Email email, Address address, Gender gender,
                 Major major, Modules modules, Race race, Set<Tag> tags, CommunicationChannel comms,
                 Favorite favorite, UniqueEventList events) {
         super(name, phone, email, address, gender, major, modules, race, tags, comms);
