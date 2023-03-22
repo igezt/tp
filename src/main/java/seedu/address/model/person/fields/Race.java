@@ -1,7 +1,6 @@
 package seedu.address.model.person.fields;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.Objects;
 
@@ -21,7 +20,7 @@ public class Race {
      */
     public Race(String race) {
         requireNonNull(race);
-        checkArgument(isValidRace(race), MESSAGE_CONSTRAINTS);
+        //checkArgument(isValidRace(race), MESSAGE_CONSTRAINTS);
         this.race = race;
     }
 
@@ -33,6 +32,13 @@ public class Race {
             return true;
         }
         return trimmedRace.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if a name is a substring of the characters of another name.
+     */
+    public boolean contains(Race race) {
+        return this.race.toUpperCase().contains(race.race.toUpperCase());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package seedu.address.model.person.fields.subfields;
 
+
 /**
  * Represents a Person's singular mod taken in the address book.
  */
@@ -15,6 +16,13 @@ public class NusMod {
     //todo: Update modules to only be able to include mods that are a part of NUSMods.
     public static boolean isValidModName(String trimmedTag) {
         return true;
+    }
+
+    /**
+     * Returns true if a NusMod is a substring of the characters of another NusMod.
+     */
+    public boolean contains(NusMod mod) {
+        return this.name.toUpperCase().contains(mod.name.toUpperCase());
     }
 
     @Override

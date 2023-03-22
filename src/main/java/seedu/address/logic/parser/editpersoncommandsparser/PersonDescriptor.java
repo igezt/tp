@@ -23,17 +23,17 @@ import seedu.address.model.person.fields.subfields.Tag;
  */
 public class PersonDescriptor {
 
-    private Optional<Index> index;
-    private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
-    private Set<Tag> tags;
-    private Gender gender;
-    private Major major;
-    private Race race;
-    private Modules modules;
-    private CommunicationChannel comms;
+    protected Optional<Index> index;
+    protected Name name;
+    protected Phone phone;
+    protected Email email;
+    protected Address address;
+    protected Set<Tag> tags;
+    protected Gender gender;
+    protected Major major;
+    protected Race race;
+    protected Modules modules;
+    protected CommunicationChannel comms;
 
     public PersonDescriptor() {}
 
@@ -58,7 +58,7 @@ public class PersonDescriptor {
 
 
     /**
-     * Returns true if at least one field is edited.
+     * Returns true if at least one field is filled.
      */
     public boolean isAnyFieldEdited() {
         return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, gender, major, race, modules, comms);

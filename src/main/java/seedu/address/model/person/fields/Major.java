@@ -36,6 +36,13 @@ public class Major {
         return trimmedMajor.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a major is a substring of the characters of another major.
+     */
+    public boolean contains(Major major) {
+        return this.majorName.toUpperCase().contains(major.majorName.toUpperCase());
+    }
+
     @Override
     public String toString() {
         return this.majorName;

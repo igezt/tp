@@ -22,6 +22,21 @@ public class Modules {
         return true;
     }
 
+    /**
+     * Returns true if a name is a substring of the characters of another name.
+     */
+    public boolean contains(Modules mods) {
+        if (mods == null) {
+            return false;
+        }
+        for (NusMod mod: mods.mods) {
+            if (this.mods.stream().noneMatch(m -> m.contains(mod))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

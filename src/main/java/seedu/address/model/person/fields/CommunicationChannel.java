@@ -16,6 +16,13 @@ public class CommunicationChannel {
         return true;
     }
 
+    /**
+     * Returns true if a communication channel is a substring of the characters of another communication channel.
+     */
+    public boolean contains(CommunicationChannel comms) {
+        return this.nameOfCommunicationChannel.toUpperCase().contains(comms.nameOfCommunicationChannel.toUpperCase());
+    }
+
     @Override
     public String toString() {
         return this.nameOfCommunicationChannel;

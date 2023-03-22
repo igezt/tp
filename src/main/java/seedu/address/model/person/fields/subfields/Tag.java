@@ -32,6 +32,13 @@ public class Tag {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a tag is a substring of the characters of another tag.
+     */
+    public boolean contains(Tag tag) {
+        return this.tagName.toUpperCase().contains(tag.tagName.toUpperCase());
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

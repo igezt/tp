@@ -171,6 +171,36 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Loosely parses a {@code String tag} into a {@code Tag} by disregarding the validity of the tag.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code tag} is invalid.
+     */
+    public static Tag looseParseTag(String tag) throws ParseException {
+        if (tag == null) {
+            return null;
+        }
+        String trimmedTag = tag.trim();
+        if (!Tag.isValidTagName(trimmedTag)) {
+            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+        }
+        return new Tag(trimmedTag);
+    }
+
+    /**
+     * Loosely parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> looseParseTags(Collection<String> tags) throws ParseException {
+        if (tags.isEmpty()) {
+            return new HashSet<>();
+        }
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(looseParseTag(tagName));
+        }
+        return tagSet;
+    }
     //    public static Favorite parseFavorite(String favorite) throws ParseException{
     //        if (favorite == null) {
     //            return null;
@@ -244,6 +274,34 @@ public class ParserUtil {
         if (!NusMod.isValidModName(trimmedTag)) {
             throw new ParseException(NusMod.MESSAGE_CONSTRAINTS);
         }
+        return new NusMod(trimmedTag);
+    }
+
+    /**
+     * Parses {@code Collection<String> modules} into a {@code Modules} but disregards the validity of the mod string.
+     */
+    public static Modules looseParseModules(Collection<String> modules) throws ParseException {
+        if (modules.isEmpty()) {
+            return new Modules(new HashSet<>());
+        }
+        final Set<NusMod> modulesSet = new HashSet<>();
+        for (String module : modules) {
+            modulesSet.add(looseParseModule(module.toUpperCase()));
+        }
+        return new Modules(modulesSet);
+    }
+
+    /**
+     * Parses a {@code String module} into an {@code NusMod}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code module} is invalid.
+     */
+    private static NusMod looseParseModule(String module) throws ParseException {
+        if (module == null) {
+            return null;
+        }
+        String trimmedTag = module.trim();
         return new NusMod(trimmedTag);
     }
 

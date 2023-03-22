@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.logic.parser.editpersoncommandsparser.PersonDescriptor;
 import seedu.address.model.person.fields.Address;
 import seedu.address.model.person.fields.CommunicationChannel;
 import seedu.address.model.person.fields.Email;
@@ -251,4 +252,70 @@ public class Person {
         return builder.toString();
     }
 
+    /**
+     * Returns true if for all the tags t1 in tags, there exists one tag t2 in the tagsList of Person
+     * where t1.contains(t2) is true.
+     */
+    private boolean containsTags(Set<Tag> tags) {
+        if (tags == null) {
+            return false;
+        }
+        for (Tag tag: tags) {
+            if (this.tags.stream().noneMatch(t -> t.contains(tag))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Returns true if for all non-empty fields in descriptor, they are contained in the person.
+     */
+    public boolean contains(PersonDescriptor descriptor) {
+
+
+
+        if (descriptor.getName().isPresent() && !this.name.contains(descriptor.getName().get())) {
+            return false;
+        }
+
+        if (descriptor.getPhone().isPresent() && !this.phone.contains(descriptor.getPhone().get())) {
+            return false;
+        }
+
+        if (descriptor.getEmail().isPresent() && !this.email.contains(descriptor.getEmail().get())) {
+            return false;
+        }
+
+        if (descriptor.getAddress().isPresent() && !this.address.contains(descriptor.getAddress().get())) {
+            return false;
+        }
+
+        if (descriptor.getGender().isPresent() && !this.gender.contains(descriptor.getGender().get())) {
+            return false;
+        }
+
+        if (descriptor.getMajor().isPresent() && !this.major.contains(descriptor.getMajor().get())) {
+            return false;
+        }
+
+        if (descriptor.getModules().isPresent() && !this.modules.contains(descriptor.getModules().get())) {
+            return false;
+        }
+
+        if (descriptor.getRace().isPresent() && !this.race.contains(descriptor.getRace().get())) {
+            return false;
+        }
+
+        if (descriptor.getComms().isPresent() && !this.comms.contains(descriptor.getComms().get())) {
+            return false;
+        }
+
+        if (descriptor.getName().isPresent() && !this.containsTags(this.tags)) {
+            return false;
+        }
+
+        return true;
+    }
 }

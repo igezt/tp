@@ -54,6 +54,13 @@ public class Favorite {
     }
 
     /**
+     * Returns true if a favorite is equal to another gender.
+     */
+    public boolean contains(Favorite favorite) {
+        return this.equals(favorite);
+    }
+
+    /**
      * Returns a String Representation of Favorite.
      */
     @Override

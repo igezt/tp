@@ -1,7 +1,6 @@
 package seedu.address.model.person.fields;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's name in the address book.
@@ -27,7 +26,7 @@ public class Name {
      */
     public Name(String name) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
+        //checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
         fullName = name;
     }
 
@@ -38,6 +37,12 @@ public class Name {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a name is a substring of the characters of another name.
+     */
+    public boolean contains(Name name) {
+        return this.fullName.toUpperCase().contains(name.fullName.toUpperCase());
+    }
 
     @Override
     public String toString() {

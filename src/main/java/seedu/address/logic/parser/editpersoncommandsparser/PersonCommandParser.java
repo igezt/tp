@@ -25,13 +25,21 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.fields.Address;
+import seedu.address.model.person.fields.CommunicationChannel;
+import seedu.address.model.person.fields.Email;
+import seedu.address.model.person.fields.Gender;
+import seedu.address.model.person.fields.Major;
 import seedu.address.model.person.fields.Modules;
+import seedu.address.model.person.fields.Name;
+import seedu.address.model.person.fields.Phone;
+import seedu.address.model.person.fields.Race;
 import seedu.address.model.person.fields.subfields.Tag;
 
 /**
  * Abstract class to inherit from for parser classes which parse objects of the {@link Person} class
  */
-public abstract class EditPersonCommandParser {
+public abstract class PersonCommandParser {
 
     public abstract Optional<Index> parseIndex(String index) throws ParseException;
 
@@ -97,6 +105,64 @@ public abstract class EditPersonCommandParser {
         return editPersonDescriptor;
     }
 
+    /**
+     * Same logic as parseForTags, but ignoring all the constraints of the fields of a person.
+     */
+    public PersonDescriptor looseParseForTags(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args,
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
+                        PREFIX_GENDER, PREFIX_MAJOR, PREFIX_MODULES, PREFIX_RACE, PREFIX_COMMS);
+
+        Optional<Index> index;
+        PersonDescriptor editPersonDescriptor = new PersonDescriptor();
+
+        try {
+            index = this.parseIndex(argMultimap.getPreamble());
+            editPersonDescriptor.setIndex(index);
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, this.getMessageUsage()), pe
+            );
+        }
+
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            editPersonDescriptor.setName(new Name(argMultimap.getValue(PREFIX_NAME).get().trim()));
+        }
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            editPersonDescriptor.setPhone(new Phone(argMultimap.getValue(PREFIX_PHONE).get().trim()));
+        }
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            editPersonDescriptor.setEmail(new Email(argMultimap.getValue(PREFIX_EMAIL).get().trim()));
+        }
+        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+            editPersonDescriptor.setAddress(new Address(argMultimap.getValue(PREFIX_ADDRESS).get().trim()));
+        }
+        if (argMultimap.getValue(PREFIX_GENDER).isPresent()) {
+            editPersonDescriptor.setGender(new Gender(argMultimap.getValue(PREFIX_GENDER).get().trim()));
+        }
+        if (argMultimap.getValue(PREFIX_MAJOR).isPresent()) {
+            editPersonDescriptor.setMajor(new Major(argMultimap.getValue(PREFIX_MAJOR).get().trim()));
+        }
+        if (argMultimap.getValue(PREFIX_RACE).isPresent()) {
+            editPersonDescriptor.setRace(new Race(argMultimap.getValue(PREFIX_RACE).get().trim()));
+        }
+        if (argMultimap.getValue(PREFIX_COMMS).isPresent()) {
+            editPersonDescriptor.setComms(new CommunicationChannel((argMultimap.getValue(PREFIX_COMMS).get().trim())));
+        }
+
+        looseParseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+        looseParseModulesForEdit(argMultimap.getAllValues(PREFIX_MODULES)).ifPresent(editPersonDescriptor::setModules);
+
+
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditContactCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return editPersonDescriptor;
+    }
+
 
     private Optional<Modules> parseModulesForEdit(Collection<String> mods) throws ParseException {
         assert mods != null;
@@ -106,6 +172,16 @@ public abstract class EditPersonCommandParser {
         }
         Collection<String> tagSet = mods.size() == 1 && mods.contains("") ? Collections.emptySet() : mods;
         return Optional.of(ParserUtil.parseModules(tagSet));
+    }
+
+    private Optional<Modules> looseParseModulesForEdit(Collection<String> mods) throws ParseException {
+        assert mods != null;
+
+        if (mods.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = mods.size() == 1 && mods.contains("") ? Collections.emptySet() : mods;
+        return Optional.of(ParserUtil.looseParseModules(tagSet));
     }
 
     /**
@@ -121,6 +197,16 @@ public abstract class EditPersonCommandParser {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+    private Optional<Set<Tag>> looseParseTagsForEdit(Collection<String> tags) throws ParseException {
+        assert tags != null;
+
+        if (tags.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        return Optional.of(ParserUtil.looseParseTags(tagSet));
     }
 
 }

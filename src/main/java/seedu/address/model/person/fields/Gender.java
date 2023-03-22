@@ -49,6 +49,13 @@ public class Gender {
                 || Objects.equals(lowerCaseGender, "dns") || Objects.equals(lowerCaseGender, "");
     }
 
+    /**
+     * Returns true if a gender is equal to another gender.
+     */
+    public boolean contains(Gender gender) {
+        return this.equals(gender);
+    }
+
     @Override
     public String toString() {
         return gender.toString();

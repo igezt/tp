@@ -42,6 +42,13 @@ public class Address {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a address is a substring of the characters of another address.
+     */
+    public boolean contains(Address address) {
+        return this.value.toUpperCase().contains(address.value.toUpperCase());
+    }
+
     @Override
     public String toString() {
         return value;
