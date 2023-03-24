@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
@@ -125,6 +126,10 @@ public class UniqueEventList implements Iterable<Event> {
                 }
             }
         }
+        return true;
+    }
+
+    public boolean isValidEventIndex(Index index) {
         return true;
     }
 }

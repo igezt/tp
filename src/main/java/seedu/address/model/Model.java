@@ -117,6 +117,8 @@ public interface Model {
 
     ObservableList<Event> getEvents();
 
+    Event getEvent(Index index);
+
     boolean isValidTabIndex(Index index);
 
     TabUtil getTabUtil();

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.person.Person;
@@ -70,6 +71,10 @@ public class User extends Person {
 
     public UniqueEventList getEvents() {
         return this.events;
+    }
+
+    public boolean isValidEventIndex(Index index) {
+        return this.events.isValidEventIndex(index);
     }
 }
 

@@ -166,6 +166,12 @@ public class ModelManager implements Model {
         return this.userData.getData().getValue().getEvents().asUnmodifiableObservableList();
     }
 
+    @Override
+    public Event getEvent(Index index) {
+        this.userData.isValidEventIndex(index);
+        return null;
+    }
+
 
     //=========== Filtered Person List Accessors =============================================================
 

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.ReadOnlyUserData;
 import seedu.address.model.event.Event;
 
@@ -70,6 +71,7 @@ public class UserData implements ReadOnlyUserData {
     public boolean hasEvent(Event e) {
         return this.user.getValue().hasEvent(e);
     }
+
     public void addEvent(Event e) {
         this.user.getValue().addEvent(e);
     }
@@ -84,5 +86,9 @@ public class UserData implements ReadOnlyUserData {
     @Override
     public int hashCode() {
         return user.hashCode();
+    }
+
+    public boolean isValidEventIndex(Index index) {
+        return this.user.getValue().isValidEventIndex(index);
     }
 }
