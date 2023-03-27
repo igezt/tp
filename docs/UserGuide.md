@@ -227,18 +227,24 @@ Want to narrow down your displayed contacts to a certain few?
 
 Use this command to find contacts whose names contain any of the given keywords!
 
-> Command: `find KEYWORD [MORE_KEYWORDS]`
+> Command: `find {SPECIFIER}/{keyword}`
 
 Here are some important requirements for you to take note:
-* Only the name is searched.
+
+* The persons returned will satisfy the following condition:
+  * At least one keyword for each of the respective fields are found in that person
+    * e.g. given 3 people called John Ng, Nathan Neo and Pierce Ng. For the following command,
+    find n/Pierce n/Ng mt/CS2103T 
+
+* Each field you want to search has to be specified using their respective SPECIFIERs below.
 * The search is **case-insensitive**.
 
-    _[e.g `hans`,`Hans`, `HANS` are all equivalent]_
+    _[e.g `n/hans`,`n/Hans`, `n/HANS` are all equivalent]_
 * The order of the keywords does not matter.
 
-    _[e.g. `Hans Bo` will match `Bo Hans`]_
+    _[e.g. `n/Hans n/Bo` will match `Bo Hans`]_
 
-* Only full words will be matched
+* Only full words used by the specifiers will be matched
 
     _[e.g. `Han` will not match `Hans`]_
 * Persons matching at least one keyword will be returned (i.e. `OR` search)
